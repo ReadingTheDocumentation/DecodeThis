@@ -66,3 +66,29 @@ blockquote {
 
 }
 
+@media only screen and (max-width: 600px) {
+  section {
+    padding: 5px;
+    margin: 5px;
+  }
+
+  .quote {
+    color: hsl(204, 86%, 53%);
+    margin-top: 5px;
+  margin-bottom: 5px;
+    font-size: 1.5em;
+    letter-spacing: .25rem;
+  
+  }
+
+  .changes {
+
+    margin: 5px;
+  }
+
+  .tageach {
+    display: inline-block;
+    margin: 5px;
+  }
+}
+

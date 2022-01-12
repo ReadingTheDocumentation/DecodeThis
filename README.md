@@ -13,7 +13,9 @@ Version 1 Goals
 []Style in Bulma
 []Host on GitHub
 
+// add Modul on completion and use for the question / start 
 
+//move from one textbox to the next automaticcly - https://stackoverflow.com/questions/17522431/automatically-move-cursor-from-one-textbox-to-another
 
 //mockup https://excalidraw.com/#room=27239d9c23fcd70fc14f,YvJQP8y6frEkB6BZSxr73w
 

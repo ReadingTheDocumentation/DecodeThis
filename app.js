@@ -111,9 +111,7 @@ const getQuote = async () => {
     try {
 
         let res = await axios.get('https://api.quotable.io/random?maxLength=100')
-        console.log(res.data.author)
         let dailyQuote = res.data.content
-        console.log(res.data.content)
         let author = res.data.author
         runtime = new DecodeQuote(dailyQuote, author)
         runtime.spanify(runtime.decodeThis)
