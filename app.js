@@ -53,12 +53,12 @@ app.addEventListener("click", (e) => {
         for (let i = 0; i < par.length; i++) {
 
             if (par[i].id === 'from') {
-                from = par[i].innerText || par[i].value
+                from = par[i].innerText || par[i].value.toLowerCase()
                 par[i].value = ''
 
             }
             if (par[i].id === 'to') {
-                to = par[i].innerText || par[i].value
+                to = par[i].innerText || par[i].value.toLowerCase()
                 par[i].value = ''
             }
         }
@@ -74,8 +74,6 @@ app.addEventListener("click", (e) => {
         runtime.fullyDecoded()
     }
     fromBox.focus()
-
-
 
 })
 
