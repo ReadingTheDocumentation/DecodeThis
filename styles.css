@@ -1,0 +1,68 @@
+
+section {
+  padding: 10px;
+  margin: 10px;
+}
+
+input {
+  text-align: center;
+  margin-right: 1px;
+  }
+
+blockquote {
+  font-family: American Typewriter, serif	;
+  font-size: 2em;
+  margin: 20px;
+}
+
+  .author {
+    margin: 20px;
+    margin-right: 25%;
+    text-align: right;
+    font-family: cursive;
+    font-size: 1.25em;	
+  }
+
+  div.card-content{
+    line-height: 3em;
+  }
+
+.card-header-title{
+  text-align: center;
+  font-size: 4vh;
+}
+
+.quote {
+  color: hsl(204, 86%, 53%);
+  font-size: 1.5em;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  letter-spacing: .25rem;
+
+}
+
+.defaultSize {
+  color: hsl(204, 86%, 53%);
+  font-size: 1em;
+}
+
+.changes {
+
+  margin: 10px;
+}
+
+#quotationmarks {
+  display: inline;
+}
+
+.tageach {
+  display: inline-block;
+  margin: 10px;
+}
+
+.newSize{
+  color: hsl(0, 0%, 4%);
+  font-size:1.2em ;
+
+}
+
