@@ -29,7 +29,7 @@ blockquote {
 
 .card-header-title{
   text-align: center;
-  font-size: 4vh;
+  font-size: 3vh;
 }
 
 .quote {
@@ -47,13 +47,10 @@ blockquote {
 }
 
 .changes {
-
   margin: 10px;
 }
 
-#quotationmarks {
-  display: inline;
-}
+
 
 .tageach {
   display: inline-block;
@@ -67,19 +64,49 @@ blockquote {
 }
 
 @media only screen and (max-width: 600px) {
+  
+  .column.hide-mobile {
+    display: none;
+   }
+
+   .column{
+     padding: .75rem;
+   }
+  
+  body {
+    margin-top: 0px;
+  }
+  
   section {
-    padding: 5px;
-    margin: 5px;
+    padding: 0px;
+    margin-right: 3px;
+    margin-left: 3px;
   }
 
+  div.card-content{
+    line-height: 2em;
+  }
+  
   .quote {
     color: hsl(204, 86%, 53%);
     margin-top: 5px;
-  margin-bottom: 5px;
-    font-size: 1.5em;
+    margin-bottom: 5px;
     letter-spacing: .25rem;
   
   }
+ .defaultSize {
+    color: hsl(204, 86%, 53%);
+    font-size: .85em;
+  }
+
+  .newSize{
+    color: hsl(0, 0%, 4%);
+    font-size:1em ;
+  
+  }
+
+ 
+
 
   .changes {
 
