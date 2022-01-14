@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decodaquote with Bulma</title>
+    <title>Decode This!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="https://kit.fontawesome.com/d13891405c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
@@ -31,14 +31,14 @@
                     <div class="card-content">
                         <div class="content">
 
-                            <p class="quote"></p>
 
                         </div>
                     </div>
                     <footer class="card-footer">
-                        <input class="input is-link is-medium from" id="from" type="text" placeholder="From">
-                        <input class="input is-primary is-medium to" id="to" type="text" placeholder="To">
-                        <button class="button is-primary is-medium is-fullwidth swap" id="swap">Change Letters</button>
+                        <input class="input is-link is-medium from" maxlength="1" id="from" type="text"
+                            placeholder="From">
+                        <input class="input is-primary is-medium to" id="to" maxlength="1" type="text" placeholder="To">
+
                     </footer>
                 </div>
                 <div class="box">
@@ -53,26 +53,16 @@
             </div>
     </section>
 
-    <div class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Congratulations! You Decoded It!</p>
-                <button class="delete" aria-label="close"></button>
-            </header>
-            <div class="modal-card-body">
-                <blockquote></blockquote>
-                <p class="author"></p>
-            </div>
-            <footer class="modal-card-foot">
-            </footer>
-        </div>
-    </div>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <script src="app.js"></script>
+    <script src="playerInputs.js"></script>
+    <script src="templates.js"></script>
+    <script src="apiCall.js"></script>
+    <script src="render.js"></script>
+    <script src="launchApp.js"></script>
 </body>
 
 </html>
