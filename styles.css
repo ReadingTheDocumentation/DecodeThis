@@ -34,7 +34,7 @@ blockquote {
 
 .quote {
   color: hsl(204, 86%, 53%);
-  font-size: 1.5em;
+  /* font-size: 1.5em; */
   margin-top: 35px;
   margin-bottom: 35px;
   letter-spacing: .25rem;
@@ -43,9 +43,14 @@ blockquote {
 
 .defaultSize {
   color: hsl(204, 86%, 53%);
-  font-size: 1em;
+  font-size: 1.1em;
 }
 
+.newSize{
+  color: hsl(0, 0%, 4%);
+  font-size:1.3em ;
+
+}
 .changes {
   margin: 10px;
 }
@@ -57,11 +62,6 @@ blockquote {
   margin: 10px;
 }
 
-.newSize{
-  color: hsl(0, 0%, 4%);
-  font-size:1.2em ;
-
-}
 
 @media only screen and (max-width: 600px) {
   
@@ -101,11 +101,9 @@ blockquote {
 
   .newSize{
     color: hsl(0, 0%, 4%);
-    font-size:1em ;
+    font-size: 1em ;
   
   }
-
- 
 
 
   .changes {
