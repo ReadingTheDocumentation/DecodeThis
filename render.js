@@ -5,6 +5,8 @@ class DecodeQuote {
         this.letters = {}
         this.decodeThis = this.randomizeQuote()
         this.userInput = ''
+        this.htmlQuote = document.createElement('p')
+        this.quoteElement;
     }
 
     randomizeQuote() {
@@ -43,24 +45,41 @@ class DecodeQuote {
         return String.fromCharCode(newCharCode)
     }
 
+
+    //refactor this code to do it write
+    //return the entire HTML element -- instead of passing it
+
+
     spanify(words) {
-        quote.innerHTML += `<span class="newSize">"</span>`
+        this.htmlQuote.classList.add("quote")
+        let contentElement = document.querySelector(".content")
+
+
         for (let i = 0; i < words.length; i++) {
-            const newSpan = document.createElement("span")
-            newSpan.innerText = words[i]
-            newSpan.id = words[i]
-            if (words.charCodeAt([i]) < 97) {
-                newSpan.className = "newSize"
-            } newSpan.className = "defaultSize"
-            quote.appendChild(newSpan)
+            let curChar = words[i]
+            const letterSpan = document.createElement("span")
+            letterSpan.innerText = curChar
+            letterSpan.id = curChar
+            if (curChar.charCodeAt(0) > 96 && curChar.charCodeAt(0) < 123) {
+                letterSpan.classList.add("defaultSize")
+            } else { letterSpan.classList.add("newSize") }
+            this.htmlQuote.append(letterSpan)
         }
-        quote.innerHTML += `<span class="newSize">"</span>`
+        console.log(this.htmlQuote)
+
+        contentElement.append(this.htmlQuote)
+
+
 
     }
 
-    changeQuote(el, from, to, revert) {
-        console.log(revert)
-        let element = el.children
+    changeQuote(from, to, revert) {
+
+
+        this.quoteElement = document.querySelector(".quote")
+        const element = this.quoteElement.children
+
+        console.log(element.length)
 
         if (!revert) {
             for (let i = 0; i < element.length; i++) {
@@ -79,28 +98,21 @@ class DecodeQuote {
 
                 }
             }
+
         }
 
     }
 
-    fullyDecoded() {
-        let userSolution = ''
-        let spans = quote.children
-        for (let i = 1; i < quote.children.length - 1; i++) {
-            userSolution += quote.children[i].innerText
-        }
-        if (userSolution === this.lcQuote) {
-            console.log(quote)
-            modal.querySelector('blockquote').innerText = `"${testQuote}"`
-            modal.querySelector('.author').innerText = `—${author}`
-
-            modal.classList.add('is-active')
-
-        }
-
-
-    }
-
-
-
+    // fullyDecoded() {
+    //     let userSolution = ''
+    //     for (let i = 1; i < quote.children.length - 1; i++) {
+    //         userSolution += quote.children[i].innerText
+    //     }
+    //     if (userSolution === this.lcQuote) {
+    //         console.log(quote)
+    //         modal.querySelector('blockquote').innerText = `"${testQuote}"`
+    //         modal.querySelector('.author').innerText = `—${author}`
+    //         modal.classList.add('is-active')
+    //     }
+    // }
 }
