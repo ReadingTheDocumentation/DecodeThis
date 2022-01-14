@@ -96,12 +96,12 @@ blockquote {
   }
  .defaultSize {
     color: hsl(204, 86%, 53%);
-    font-size: .85em;
+    font-size: 1.2em;
   }
 
   .newSize{
     color: hsl(0, 0%, 4%);
-    font-size: 1em ;
+    font-size: 1.5em ;
   
   }
 
