@@ -6,10 +6,10 @@
 
 
 
-let closeModal = document.querySelector('.delete')
-closeModal.addEventListener('click', (e) => {
-    modal.classList.remove('is-active')
-})
+// let closeModal = document.querySelector('.delete')
+// closeModal.addEventListener('click', (e) => {
+//     modal.classList.remove('is-active')
+// })
 
 
 
@@ -17,13 +17,13 @@ closeModal.addEventListener('click', (e) => {
 let footer = document.querySelector('.card-footer')
 let fromBox = document.querySelector('#from')
 let toBox = document.querySelector('#to')
-let button = document.querySelector('#swap')
+
 footer.addEventListener('keyup', (e) => {
     if (fromBox.value.length >= 1) {
         toBox.focus()
     }
     if (toBox.value.length >= 1) {
-        button.focus()
+        letterChange(e)
     }
     if (e.keyCode === 8) {
         toBox.value = ''
@@ -34,45 +34,59 @@ footer.addEventListener('keyup', (e) => {
 
 
 // ***** Player Inputs ****//
-let app = document.querySelector('section')
-app.addEventListener("click", (e) => {
+
+
+let tagBox = document.querySelector('.box')
+tagBox.addEventListener("click", (e) => {
     e.preventDefault()
+    letterChange(e)
+
+})
+
+
+
+
+function letterChange(e) {
     let from = ''
     let to = ''
     let del = false
     let removeTag = e.target.parentNode;
 
 
-    if (e.target.id === "swap" || e.target.id === "tag") {
-        if (e.target.id === "tag") { del = true }
-        let par = e.target.parentNode.children;
-        for (let i = 0; i < par.length; i++) {
 
-            if (par[i].id === 'from') {
-                from = par[i].innerText || par[i].value.toLowerCase()
-                par[i].value = ''
+    if (e.target.id === "tag") { del = true }
 
-            }
-            if (par[i].id === 'to') {
-                to = par[i].innerText || par[i].value.toLowerCase()
-                par[i].value = ''
-            }
-        }
+    let par = e.target.parentNode.children;
+    for (let i = 0; i < par.length; i++) {
 
-        if (del === false) {
-            createTag(from, to)
-            runtime.changeQuote(quote, from, to)
+        if (par[i].id === 'from') {
+            from = par[i].innerText || par[i].value.toLowerCase()
+            par[i].value = ''
+
         }
-        if (del === true) {
-            runtime.changeQuote(quote, to, from, del)
-            deleteTag(removeTag)
+        if (par[i].id === 'to') {
+            to = par[i].innerText || par[i].value.toLowerCase()
+            par[i].value = ''
         }
-        runtime.fullyDecoded()
     }
+
+    if (del === false) {
+        createTag(from, to)
+        runtime.changeQuote(from, to)
+    }
+    if (del === true) {
+        runtime.changeQuote(to, from, del)
+        deleteTag(removeTag)
+    }
+    // runtime.fullyDecoded()
+
+
     fromBox.focus()
+}
 
-})
-
+function deleteTag(toDelete) {
+    toDelete.remove()
+}
 
 
 
