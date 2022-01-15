@@ -11,8 +11,30 @@ input {
 
 blockquote {
   font-family: American Typewriter, serif	;
-  font-size: 2em;
+  font-size: 1.5em;
   margin: 20px;
+}
+
+.modal-card {
+  width: 90%;
+}
+
+.modal-card-title {
+  align-items: center;
+  color: #363636;
+  display: flex;
+  flex-grow: 1;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+}
+
+.changes{
+  align-items: center;
+  color: #363636;
+  display: flex;
+  flex-grow: 1;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
 }
 
   .author {
@@ -58,6 +80,7 @@ blockquote {
 
 
 .tageach {
+  
   display: inline-block;
   margin: 10px;
 }

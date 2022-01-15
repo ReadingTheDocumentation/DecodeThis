@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mocha Tests</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mocha/5.0.0/mocha.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="playerInputs.js"></script>
+    <script src="templates.js"></script>
+    <script src="apiCall.js"></script>
+    <script src="render.js"></script>
+    <script src="launchApp.js"></script>
+</head>
+
+<body>
+    <div id="mocha"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/5.0.0/mocha.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.1.2/chai.js"></script>
+
+    <script>mocha.setup('bdd')</script>
+
+    <script>
+        var assert = chai.assert;
+
+        describe('API Call functions', function () {
+            it('Try functions', function () {
+                assert.equal(1, 1);
+            });
+            it('Catch functions', function () {
+                assert.equal(3, 4);
+            });
+        });
+
+        describe('Span the Quotes', function () {
+            it('Letters have class of .defaultSize', function () {
+                assert.equal(1, 1);
+
+
+
+
+
+            });
+            it('Other characters should have class of .newSize', function () {
+                assert.equal(3, 4);
+            });
+        });
+    </script>
+
+
+
+
+    <script>
+        mocha.checkLeaks();
+        mocha.run();
+    </script>
+</body>
+
+</html>

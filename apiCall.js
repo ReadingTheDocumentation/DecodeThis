@@ -10,8 +10,8 @@ const getQuote = async () => {
         runtime = new DecodeQuote(dailyQuote, author)
 
     } catch (e) {
-        // let dailyQuote = "I love deadlines. I love the whooshing noise they make as they go by."
-        let dailyQuote = `"forty two!"`
+        let dailyQuote = "I love deadlines. I love the whooshing noise they make as they go by."
+
         let author = "Douglas Adams"
         runtime = new DecodeQuote(dailyQuote, author)
 

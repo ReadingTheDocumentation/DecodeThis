@@ -1,12 +1,12 @@
 class DecodeQuote {
     constructor(quote, author) {
         this.author = author
+        this.quote = quote
         this.lcQuote = quote.toLowerCase()
         this.letters = {}
         this.decodeThis = this.randomizeQuote()
-        this.userInput = ''
         this.htmlQuote = document.createElement('p')
-        this.quoteElement;
+
     }
 
     randomizeQuote() {
@@ -35,7 +35,7 @@ class DecodeQuote {
 
         let newCharCode = Math.floor(Math.random() * (123 - 97) + 97)
         //verify random number does not exist in object
-        if (Object.values(this.letters).includes(String.fromCharCode(newCharCode))) {
+        if (Object.values(this.letters).includes(String.fromCharCode(newCharCode)) || currentLetter === String.fromCharCode(newCharCode)) {
             //if it does get another random number
             return this.getLetter(currentLetter)
         }
@@ -76,8 +76,8 @@ class DecodeQuote {
     changeQuote(from, to, revert) {
 
 
-        this.quoteElement = document.querySelector(".quote")
-        const element = this.quoteElement.children
+        this.htmlQuote = document.querySelector(".quote")
+        const element = this.htmlQuote.children
 
         console.log(element.length)
 
@@ -103,16 +103,19 @@ class DecodeQuote {
 
     }
 
-    // fullyDecoded() {
-    //     let userSolution = ''
-    //     for (let i = 1; i < quote.children.length - 1; i++) {
-    //         userSolution += quote.children[i].innerText
-    //     }
-    //     if (userSolution === this.lcQuote) {
-    //         console.log(quote)
-    //         modal.querySelector('blockquote').innerText = `"${testQuote}"`
-    //         modal.querySelector('.author').innerText = `—${author}`
-    //         modal.classList.add('is-active')
-    //     }
-    // }
+    fullyDecoded() {
+        let quoteElement = this.htmlQuote.children
+        for (let i = 1; i < quoteElement.length - 1; i++) {
+            if (quoteElement[i].innerText != this.lcQuote[i]) {
+                return;
+            }
+        }
+
+        createFinishModal(this.quote, this.author)
+
+        // this.modal.querySelector('blockquote').innerText = this.quote
+        // this.modal.querySelector('.author').innerText = `—${this.author}`
+        // this.modal.classList.add('is-active')
+
+    }
 }
