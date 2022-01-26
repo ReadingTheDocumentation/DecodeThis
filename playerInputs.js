@@ -5,19 +5,38 @@
 // ***** Modal ****//
 
 
-
 // let closeModal = document.querySelector('.delete')
 // closeModal.addEventListener('click', (e) => {
 //     modal.classList.remove('is-active')
 // })
 
 
-
+//test
 // ***** Move Cursor ****//
 let footer = document.querySelector('.card-footer')
 let fromBox = document.querySelector('#from')
 let toBox = document.querySelector('#to')
 let instruct = document.querySelector('.instruct')
+
+
+
+
+
+
+
+
+fromBox.addEventListener('touchstart', (e) => {
+    console.log(e.target.id + 'Box')
+    let element
+    //this function prevents page from scrolling up when ios opens the softkeyboard.
+    e.stopPropagation()
+    fromBox.style.transform = 'TranslateY(-10000px)'
+    fromBox.focus()
+    setTimeout(function () { fromBox.style.transform = 'none' }, 100)
+
+
+})
+
 
 footer.addEventListener('keyup', (e) => {
     if (fromBox.value.length >= 1) {
