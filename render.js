@@ -6,8 +6,20 @@ class DecodeQuote {
         this.letters = {}
         this.decodeThis = this.randomizeQuote()
         this.htmlQuote = document.createElement('p')
+        this.viewportLock = this.lockViewport();
 
     }
+
+
+
+
+    lockViewport() {
+        var viewport = document.querySelector("meta[name=viewport]");
+        viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight);
+        //locks viewport for Android devices so that soft keyboard doesn't shrink it.
+        //https://stackoverflow.com/a/62054041/17197174
+    }
+
 
     randomizeQuote() {
 
