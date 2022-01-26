@@ -1,7 +1,21 @@
 
+
+body {
+
+}
+
+
+
 section {
-  padding: 10px;
-  margin: 10px;
+  padding: 1vw;
+
+
+}
+
+.column {
+  margin: 0 auto;
+  padding: 0;
+  
 }
 
 input {
@@ -14,6 +28,8 @@ blockquote {
   font-size: 1.5em;
   margin: 20px;
 }
+
+
 
 .modal-card {
   width: 90%;
@@ -88,26 +104,20 @@ blockquote {
 
 @media only screen and (max-width: 600px) {
   
-  .column.hide-mobile {
-    display: none;
-   }
 
-   .column{
-     padding: .75rem;
-   }
+
   
   body {
     margin-top: 0px;
   }
   
-  section {
-    padding: 0px;
-    margin-right: 3px;
-    margin-left: 3px;
+  .app {
+    padding-top: 0;
+  
   }
 
   div.card-content{
-    line-height: 2em;
+    line-height: 5vh;
   }
   
   .quote {
