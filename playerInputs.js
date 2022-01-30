@@ -17,122 +17,107 @@ let footer = document.querySelector('.card-footer')
 let fromBox = document.querySelector('#from')
 let toBox = document.querySelector('#to')
 let instruct = document.querySelector('.instruct')
+let ignoreChange;
+let from;
+let to;
 
 
 
-
-
-
-
-
-fromBox.addEventListener('touchstart', (e) => {
-    console.log(e.target.id + 'Box')
-    let element
+function iOSScrollInterupt(e, element) {
     //this function prevents page from scrolling up when ios opens the softkeyboard.
     e.stopPropagation()
-    fromBox.style.transform = 'TranslateY(-10000px)'
-    fromBox.focus()
-    setTimeout(function () { fromBox.style.transform = 'none' }, 100)
+    element.style.transform = 'TranslateY(-10000px)'
+    element.focus()
+    setTimeout(function () { element.style.transform = 'none' }, 100)
+
+}
 
 
+fromBox.addEventListener('focus', (e) => {
+    iOSScrollInterupt(e, fromBox)
+})
+
+toBox.addEventListener('focus', (e) => {
+    iOSScrollInterupt(e, toBox)
 })
 
 
 footer.addEventListener('keyup', (e) => {
     if (fromBox.value.length >= 1) {
+        iOSScrollInterupt(e, toBox)
         toBox.focus()
+        from = document.querySelector('#from').value.toLowerCase()
+
     }
     if (toBox.value.length >= 1) {
-        letterChange(e, false)
-        if (instruct.className === 'instruct') {
-            instruct.classList.remove('instruct')
-            instruct.classList.add('instruct2')
-            instruct.innerText = "Click a letter to revert to initial state"
-        }
+        to = document.querySelector('#to').value.toLowerCase()
+        letterChange(from, to)
+        iOSScrollInterupt(e, fromBox)
+        fromBox.focus()
 
     }
     if (e.keyCode === 8) {
         toBox.value = ''
         fromBox.value = ''
+        iOSScrollInterupt(e, fromBox)
         fromBox.focus()
     }
 })
 
 
 // ***** Player Inputs ****//
+let modalOption = document.querySelector('.card-content')
+
+modalOption.addEventListener('click', (e) => {
+    console.log(e)
+
+
+    if (e.target.innerText === "Go Back") {
+        ignoreChange.remove()
+        to = ''
+        from = ''
+        footer.style.display = 'inline-flex'
+        iOSScrollInterupt(e, fromBox)
+        fromBox.focus()
+    }
+    if (e.target.innerText === "Confirm Change") {
+        console.log("change confirmed")
+        letterChange(to, from, true)
+        ignoreChange.remove()
+        iOSScrollInterupt(e, fromBox)
+        fromBox.focus()
+
+
+    }
+
+
+})
+
 
 let letterSelect = document.querySelector('.content')
+
 letterSelect.addEventListener('click', (e) => {
     let currentLetter = e.target
     if (currentLetter.className === 'newSize') {
-        let from = currentLetter.id
-        let to = currentLetter.innerText
-
-        instruct.innerText = 'Confirm Reversion:  '
-        createTag(to, from)
+        from = currentLetter.id
+        to = currentLetter.innerText
+        let title = "Revert Letter"
+        let message = `Would like to revert "${to.toUpperCase()}" back to it's initial state as "${from.toUpperCase()}"?`
+        duplicateLetterModal(from, to, title, message)
     }
 
 })
 
-let tagBox = document.querySelector('.box')
-tagBox.addEventListener("click", (e) => {
-    e.preventDefault()
 
-    if (e.target.id === 'tag') {
-        letterChange(e, true)
-        console.log("this fires - dlete")
+function letterChange(from, to, revert) {
 
-    }
-
-
-})
-
-
-
-
-function letterChange(e, dele) {
-
-    let from = ''
-    let to = ''
-    let del = dele
-    let removeTag = e.target.parentNode;
-
-
-    let par = e.target.parentNode.children;
-    for (let i = 0; i < par.length; i++) {
-
-        if (par[i].id === 'from') {
-            from = par[i].innerText || par[i].value.toLowerCase()
-            par[i].value = ''
-
-        }
-        if (par[i].id === 'to') {
-            to = par[i].innerText || par[i].value.toLowerCase()
-            par[i].value = ''
-        }
-    }
-
-    if (del === false) {
-
-        runtime.changeQuote(from, to)
-    }
-    if (del === true) {
-        console.log("delete clicked")
-        runtime.changeQuote(to, from, del)
-        deleteTag(removeTag)
-    }
+    // let from = document.querySelector('#from').value
+    // let to = document.querySelector('#to').value
+    runtime.changeQuote(from, to, revert)
+    runtime.userletters.add(to)
     runtime.fullyDecoded()
-
-
-    fromBox.focus()
-
-}
-
-function deleteTag() {
-    let instruct2 = document.querySelector('.instruct2')
-    let tag = document.querySelector('.tageach')
-    tag.remove()
-    instruct2.innerText = "Keep at it!"
+    toBox.value = ''
+    fromBox.value = ''
 
 }
 

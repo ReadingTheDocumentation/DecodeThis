@@ -12,6 +12,17 @@ section {
 
 }
 
+.modal-card{
+  padding: 0px;
+  margin: 0px;
+  max-height: 50vh;
+  width: 100%;
+}
+
+.modal-background {
+  height: 98vh;
+}
+
 .column {
   margin: 0 auto;
   padding: 0;
@@ -31,18 +42,6 @@ blockquote {
 
 
 
-.modal-card {
-  width: 90%;
-}
-
-.modal-card-title {
-  align-items: center;
-  color: #363636;
-  display: flex;
-  flex-grow: 1;
-  font-weight: 700;
-  padding: 0.75rem 1rem;
-}
 
 .changes{
   align-items: center;

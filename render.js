@@ -4,6 +4,7 @@ class DecodeQuote {
         this.quote = quote
         this.lcQuote = quote.toLowerCase()
         this.letters = {}
+        this.userletters = new Set
         this.decodeThis = this.randomizeQuote()
         this.htmlQuote = document.createElement('p')
         this.viewportLock = this.lockViewport();
@@ -91,7 +92,6 @@ class DecodeQuote {
         this.htmlQuote = document.querySelector(".quote")
         const element = this.htmlQuote.children
 
-        console.log(element.length)
 
         if (!revert) {
             for (let i = 0; i < element.length; i++) {
@@ -102,7 +102,10 @@ class DecodeQuote {
 
             }
         }
+
+
         if (revert) {
+            console.log('revert inside changequotefires')
             for (let i = 0; i < element.length; i++) {
                 if (element[i].innerText === from && element[i].id != from) {
                     element[i].innerText = element[i].id

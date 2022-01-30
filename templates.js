@@ -3,11 +3,7 @@
 // ***** Tag Template ****//
 
 function createTag(from, to) {
-    console.log("this is called")
-    if (from && to) {
-        const changes = document.querySelector('.changes')
-        changes.innerHTML +=
-            `<div class="tageach">
+    return `<div class="tageach">
         <div class="tags has-addons">
                 <span class="tag is-primary " id="to">${from}</span>
                 <span class="tag is-link" id="from">${to}</span>
@@ -15,7 +11,7 @@ function createTag(from, to) {
             </div>
             </div>`
 
-    }
+
 
 }
 
@@ -41,3 +37,34 @@ function createFinishModal(quote, author) {
 
 }
 
+
+function duplicateLetterModal(from, to, title, message) {
+    let contentarea = document.querySelector('.card-content')
+    let duplicateModal = document.createElement('div')
+    duplicateModal.classList.add("outerModal")
+    let modalCard = `<div class="modal-background"></div>
+    <div class="modal-card" >
+    <header class="modal-card-head">
+    <p class="modal-card-title">${title}</p>
+    <button class="delete remove-modal" aria-label="close"></button>
+    </header>
+    <div class="modal-card-body">
+    <p>${message}</p>
+    <button class="button is-success">Confirm Change</button>
+    <button class="button is-warning">Go Back</button>
+
+
+    </div>
+    <footer class="modal-card-foot">
+    </footer>
+    </div>`
+
+
+    duplicateModal.innerHTML = modalCard
+    contentarea.prepend(duplicateModal)
+    ignoreChange = duplicateModal
+    footer.style.display = 'none'
+
+
+
+}
