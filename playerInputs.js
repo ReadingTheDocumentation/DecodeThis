@@ -83,6 +83,7 @@ modalOption.addEventListener('click', (e) => {
     if (e.target.innerText === "Confirm Change") {
         console.log("change confirmed")
         letterChange(to, from, true)
+        footer.style.display = 'inline-flex'
         ignoreChange.remove()
         iOSScrollInterupt(e, fromBox)
         fromBox.focus()
