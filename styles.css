@@ -101,10 +101,15 @@ blockquote {
 }
 
 
+#example {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3vh;
+}
+
 @media only screen and (max-width: 600px) {
   
-
-
+  
+  
   
   body {
     margin-top: 0px;
@@ -112,40 +117,43 @@ blockquote {
   
   .app {
     padding-top: 0;
-  
+    
   }
-
+  
   div.card-content{
-    line-height: 5vh;
+    line-height: 4.5vh;
   }
   
   .quote {
     color: hsl(204, 86%, 53%);
-    margin-top: 5px;
-    margin-bottom: 5px;
-    letter-spacing: .25rem;
-  
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    letter-spacing: .35rem;
+    
   }
- .defaultSize {
+  .defaultSize {
     color: hsl(204, 86%, 53%);
-    font-size: 1.25em;
+    font-size: 1.1em;
   }
-
+  
   .newSize{
     color: hsl(0, 0%, 4%);
-    font-size: 1.5em ;
-  
+    font-size: 1.3em ;
+    
   }
-
-
+  
+  
   .changes {
-
+    
     margin: 5px;
   }
-
+  
   .tageach {
     display: inline-block;
     margin: 5px;
   }
 }
 
+#instructions {
+  max-height: 90vh;
+}

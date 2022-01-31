@@ -2,12 +2,13 @@ class DecodeQuote {
     constructor(quote, author) {
         this.author = author
         this.quote = quote
-        this.lcQuote = quote.toLowerCase()
+        this.lcQuote = quote.toUpperCase()
         this.letters = {}
         this.userletters = new Set
         this.decodeThis = this.randomizeQuote()
         this.htmlQuote = document.createElement('p')
         this.viewportLock = this.lockViewport();
+        this.duplicateCheck = false;
 
     }
 
@@ -27,7 +28,7 @@ class DecodeQuote {
         let codedQuote = ''
         for (let i = 0; i < this.lcQuote.length; i++) {
             //if not letter, add to decode string
-            if (this.lcQuote.charCodeAt(i) >= 97 && this.lcQuote.charCodeAt(i) <= 122) {
+            if (this.lcQuote.charCodeAt(i) >= 65 && this.lcQuote.charCodeAt(i) <= 91) {
                 // in object then add to decode string
                 if (this.letters[this.lcQuote[i]]) {
                     codedQuote += this.letters[this.lcQuote[i]]
@@ -46,7 +47,7 @@ class DecodeQuote {
 
     getLetter(currentLetter) {
 
-        let newCharCode = Math.floor(Math.random() * (123 - 97) + 97)
+        let newCharCode = Math.floor(Math.random() * (91 - 65) + 65)
         //verify random number does not exist in object
         if (Object.values(this.letters).includes(String.fromCharCode(newCharCode)) || currentLetter === String.fromCharCode(newCharCode)) {
             //if it does get another random number
@@ -73,15 +74,29 @@ class DecodeQuote {
             const letterSpan = document.createElement("span")
             letterSpan.innerText = curChar
             letterSpan.id = curChar
-            if (curChar.charCodeAt(0) > 96 && curChar.charCodeAt(0) < 123) {
+            if (curChar.charCodeAt(0) > 64 && curChar.charCodeAt(0) < 91) {
                 letterSpan.classList.add("defaultSize")
             } else { letterSpan.classList.add("newSize") }
             this.htmlQuote.append(letterSpan)
         }
-        console.log(this.htmlQuote)
+
 
         contentElement.append(this.htmlQuote)
 
+
+
+    }
+
+    duplicateChecker(from, to, revert) {
+        if (this.userletters.has(to)) {
+            this.duplicateCheck = true;
+            let message = `You've already set a letter to "${to}".
+            Would you like to make this change and revert the previous "${to}" assignment?`
+            let title = `Oops! Duplicate Change`
+            duplicateLetterModal(from, to, title, message)
+        } else {
+            runtime.changeQuote(from, to, revert)
+        }
 
 
     }
@@ -91,6 +106,9 @@ class DecodeQuote {
 
         this.htmlQuote = document.querySelector(".quote")
         const element = this.htmlQuote.children
+
+
+
 
 
         if (!revert) {
@@ -105,7 +123,6 @@ class DecodeQuote {
 
 
         if (revert) {
-            console.log('revert inside changequotefires')
             for (let i = 0; i < element.length; i++) {
                 if (element[i].innerText === from && element[i].id != from) {
                     element[i].innerText = element[i].id

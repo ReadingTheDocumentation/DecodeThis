@@ -17,9 +17,16 @@ let footer = document.querySelector('.card-footer')
 let fromBox = document.querySelector('#from')
 let toBox = document.querySelector('#to')
 let instruct = document.querySelector('.instruct')
+let appHeader = document.querySelector('.card-header')
 let ignoreChange;
 let from;
 let to;
+
+appHeader.addEventListener('click', (e) => {
+    if (e.target.id === 'question') {
+        modal.classList.add("is-active")
+    }
+})
 
 
 
@@ -46,11 +53,11 @@ footer.addEventListener('keyup', (e) => {
     if (fromBox.value.length >= 1) {
         iOSScrollInterupt(e, toBox)
         toBox.focus()
-        from = document.querySelector('#from').value.toLowerCase()
+        from = document.querySelector('#from').value.toUpperCase()
 
     }
     if (toBox.value.length >= 1) {
-        to = document.querySelector('#to').value.toLowerCase()
+        to = document.querySelector('#to').value.toUpperCase()
         letterChange(from, to)
         iOSScrollInterupt(e, fromBox)
         fromBox.focus()
@@ -68,30 +75,30 @@ footer.addEventListener('keyup', (e) => {
 // ***** Player Inputs ****//
 let modalOption = document.querySelector('.card-content')
 
+
+function commonButtonActions(e) {
+    ignoreChange.remove()
+    footer.style.display = 'inline-flex'
+    fromBox.focus()
+    to = ''
+    from = ''
+    iOSScrollInterupt(e, fromBox)
+
+}
+
 modalOption.addEventListener('click', (e) => {
-    console.log(e)
-
-
     if (e.target.innerText === "Go Back") {
-        ignoreChange.remove()
-        to = ''
-        from = ''
-        footer.style.display = 'inline-flex'
-        iOSScrollInterupt(e, fromBox)
-        fromBox.focus()
+        commonButtonActions(e)
     }
     if (e.target.innerText === "Confirm Change") {
-        console.log("change confirmed")
-        letterChange(to, from, true)
-        footer.style.display = 'inline-flex'
-        ignoreChange.remove()
-        iOSScrollInterupt(e, fromBox)
-        fromBox.focus()
-
-
+        if (runtime.duplicateCheck === true) {
+            runtime.changeQuote(to, from, true)
+            runtime.changeQuote(from, to)
+            runtime.userletters.delete(to)
+            runtime.duplicateCheck = false
+        } else { letterChange(to, from, true) }
+        commonButtonActions(e)
     }
-
-
 })
 
 
@@ -114,9 +121,10 @@ function letterChange(from, to, revert) {
 
     // let from = document.querySelector('#from').value
     // let to = document.querySelector('#to').value
-    runtime.changeQuote(from, to, revert)
-    runtime.userletters.add(to)
+    runtime.duplicateChecker(from, to, revert)
+    // runtime.changeQuote(from, to, revert)
     runtime.fullyDecoded()
+    runtime.userletters.add(to)
     toBox.value = ''
     fromBox.value = ''
 
@@ -125,12 +133,15 @@ function letterChange(from, to, revert) {
 
 
 let modal = document.querySelector(".modal");
+
 modal.addEventListener('click', (e) => {
-
     console.log(e)
+    console.log(e.target.ariaLabel)
 
-    if (e.target.ariaLabel === "close") { }
-    modal.classList.remove("is-active")
+    if (e.target.ariaLabel === "close") {
+        modal.classList.remove("is-active")
+
+    }
 })
 
 
