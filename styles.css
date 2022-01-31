@@ -106,8 +106,20 @@ blockquote {
   font-size: 3vh;
 }
 
-@media only screen and (max-width: 600px) {
+#instructions {
   
+  max-height: 80vh;
+  max-width: 33vw;
+
+
+}
+
+@media only screen and (max-width: 600px) {
+  #instructions {
+    max-height: 80vh;
+    max-width: 85vw;
+  
+  }
   
   
   
@@ -122,6 +134,10 @@ blockquote {
   
   div.card-content{
     line-height: 4.5vh;
+  }
+
+  .modal-card-title {
+    font-size: 2.5vh;
   }
   
   .quote {
@@ -154,6 +170,4 @@ blockquote {
   }
 }
 
-#instructions {
-  max-height: 90vh;
-}
+
