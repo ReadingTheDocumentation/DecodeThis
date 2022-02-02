@@ -1,3 +1,6 @@
+
+
+
 class DecodeQuote {
     constructor(quote, author) {
         this.author = author
@@ -8,12 +11,19 @@ class DecodeQuote {
         this.decodeThis = this.randomizeQuote()
         this.htmlQuote = document.createElement('p')
         this.viewportLock = this.lockViewport();
+        this.footer = document.querySelector('.card-footer')
+        this.fromBox = document.querySelector('#from')
+        this.toBox = document.querySelector('#to')
+        this.cardHeader = document.querySelector('.card-header')
+        this.iconOpenRules = this.openRules();
+
+
         this.duplicateCheck = false;
+        this.ignoreChange;
+        this.from;
+        this.to;
 
     }
-
-
-
 
     lockViewport() {
         var viewport = document.querySelector("meta[name=viewport]");
@@ -21,6 +31,24 @@ class DecodeQuote {
         //locks viewport for Android devices so that soft keyboard doesn't shrink it.
         //https://stackoverflow.com/a/62054041/17197174
     }
+
+    openRules() {
+        this.cardHeader.addEventListener('click', (e) => {
+            console.log("open Rules from Class")
+            if (e.target.id === 'question') {
+                modal.classList.add("is-active")
+            }
+        })
+    }
+
+
+
+
+
+
+
+
+
 
 
     randomizeQuote() {
