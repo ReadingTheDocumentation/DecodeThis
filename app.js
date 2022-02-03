@@ -120,7 +120,6 @@ class DecodeThis {
         })
 
         this.letterSelect.addEventListener('click', (e) => {
-            debugger;
             console.log("letter select fires")
             let currentLetter = e.target
             this.revertLetter(currentLetter)
