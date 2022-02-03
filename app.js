@@ -16,7 +16,8 @@ const getQuote = async () => {
         let author = "Douglas Adams"
         newGame = new DecodeThis(dailyQuote, author)
     }
-    newGame.spanify(newGame.decodeThis)
+    // Code review: move this to bottom of constructor
+    // newGame.spanify(newGame.decodeThis)
 }
 
 class DecodeThis {
@@ -25,36 +26,43 @@ class DecodeThis {
         this.quote = quote
         this.letters = {}
         this.userletters = new Set
+
+        // Code review: you dont need this global, instead uppercase
+        // in the functions that use this global variable
         this.lcQuote = quote.toUpperCase()
         this.decodeThis = this.randomizeQuote()
-        // this.addQuoteToApp = this.spanify(this.decodeThis)
 
-        this.htmlQuote = document.createElement('p')
 
+        // Code review: this should all be "this.footerElement" or "this.footerEl"
+        this.htmlQuote;
         this.footer = document.querySelector('.card-footer')
         this.fromBox = document.querySelector('#from')
         this.toBox = document.querySelector('#to')
         this.cardHeader = document.querySelector('.card-header')
         this.letterSelect = document.querySelector('.content')
         this.cardContentArea = document.querySelector('.card-content')
-        this.modal = document.querySelector(".modal");
+        this.modal = document.querySelector(".modal")
 
-        this.modalOptionEventListeners = this.modalEventListeners();
-        this.userInputsListeners = this.inputEventListeners()
+        // Code review: add verbs these
+        // Code review: don't assign this to variables, you just need to call
+        // the function, do this for "lockViewPort" and "spanify"
+        this.modalEventListeners()
+        this.inputEventListeners()
 
-        this.viewportLock = this.lockViewport();
+        this.viewportLock = this.lockViewport()
 
-        this.duplicateCheck = false;
-        this.ignoreChange;
-        this.from;
-        this.to;
+        this.duplicateCheck = false
+        this.ignoreChange
+        this.from
+        this.to
 
+        this.addQuoteToApp = this.spanify(this.decodeThis)
     }
 
-
+    // TODO: Put comments about functions above functions
     lockViewport() {
-        var viewport = document.querySelector("meta[name=viewport]");
-        viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight);
+        var viewport = document.querySelector("meta[name=viewport]")
+        viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight)
         //locks viewport for Android devices so that soft keyboard doesn't shrink it.
         //https://stackoverflow.com/a/62054041/17197174
     }
@@ -89,6 +97,8 @@ class DecodeThis {
             this.iOSScrollInterupt(e, this.toBox)
         })
 
+        // Code review: call "this.letterChange" if there is a value in
+        // both boxes!
         this.footer.addEventListener('keyup', (e) => {
             if (this.fromBox.value.length >= 1) {
                 this.iOSScrollInterupt(e, this.toBox)
@@ -110,6 +120,7 @@ class DecodeThis {
         })
 
         this.letterSelect.addEventListener('click', (e) => {
+            debugger;
             console.log("letter select fires")
             let currentLetter = e.target
             this.revertLetter(currentLetter)
@@ -118,6 +129,8 @@ class DecodeThis {
     }
 
     modalEventListeners() {
+        // Code review: this listen should be on the question mark
+        // because it can be and its best to be specific as possible for listeners!
         this.cardHeader.addEventListener('click', (e) => {
             if (e.target.id === 'question') {
                 this.modal.classList.add("is-active")
@@ -130,6 +143,8 @@ class DecodeThis {
             }
         })
 
+        // Code review: all functions called from event listeners like this one
+        // should start with "handle" and be something like "handleConfirmChangeOrRevertClick"
         this.cardContentArea.addEventListener('click', (e) => {
             this.duplicateChangeInput(e)
         })
@@ -145,15 +160,23 @@ class DecodeThis {
         this.iOSScrollInterupt(e, this.fromBox)
     }
 
+    // Code review: what does this listener do? see comment above, functions
+    // that are called in event listeners need to start with "handle" and then
+    // be specific about which events they are handling.
     duplicateChangeInput(e) {
+        console.log("Hopefully only called when go back or confirm change clicked");
+
+        // Code review: use a class instead of the inner text, the goal being
+        // to seperate the "display/formatting/looks/html" (things that might
+        // be changed by a designed, not a programmer, or by you when you are
+        // just thinking about the design) from the logic
         if (e.target.innerText === "Go Back") {
             this.commonButtonActions(e)
         }
         if (e.target.innerText === "Confirm Change") {
-            if (this.duplicateCheck === true) {
+            if (this.cardContentArea.classList.contains("duplicate-letter")) {
                 this.changeQuote(this.to, this.from, true)
                 this.changeQuote(this.from, this.to)
-                this.duplicateCheck = false
             } else {
                 this.letterChange(this.to, this.from, true)
                 this.userletters.delete(this.to)
@@ -168,7 +191,7 @@ class DecodeThis {
             this.to = currentLetter.innerText
             let title = "Revert Letter"
             let message = `Would like to revert "${this.to.toUpperCase()}" back to it's initial state as "${this.from.toUpperCase()}"?`
-            this.duplicateLetterModal(from, to, title, message)
+            this.duplicateLetterModal(from, to, title, message, true)
         }
     }
 
@@ -206,7 +229,11 @@ class DecodeThis {
     }
 
 
+    // Code review: this function doesn't need an argument, use this.decodeThis
+    // and call "initializeSpanification" to indicate it is called once and
+    // in the beginning
     spanify(words) {
+        this.htmlQuote = document.createElement("p");
         this.htmlQuote.classList.add("quote")
         let contentElement = document.querySelector(".content")
         for (let i = 0; i < words.length; i++) {
@@ -228,7 +255,7 @@ class DecodeThis {
             let message = `You've already set a letter to "${this.to}".
             Would you like to make this change and revert the previous "${this.to}" assignment?`
             let title = `Oops! Duplicate Change`
-            this.duplicateLetterModal(from, to, title, message)
+            this.duplicateLetterModal(from, to, title, message, false)
         } else {
             this.changeQuote(from, to, revert)
         }
@@ -269,8 +296,8 @@ class DecodeThis {
         this.createFinishModal(this.quote, this.author)
     }
 
-
-    duplicateLetterModal(from, to, title, message) {
+    // Code review: this function names should start with "render"
+    duplicateLetterModal(from, to, title, message, isDuplicateScenario) {
         let duplicateModal = document.createElement('div')
         duplicateModal.classList.add("outerModal")
         let modalCard = `<div class="modal-background"></div>
@@ -286,6 +313,12 @@ class DecodeThis {
                         <footer class="modal-card-foot">
                         </footer>
                         </div>`
+
+        // Codereview: this is awkward sorry Val did this
+        this.cardContentArea.classList.remove("duplicate-letter")
+        if (isDuplicateScenario) {
+            this.cardContentArea.classList.add("duplicate-letter")
+        }
 
         duplicateModal.innerHTML = modalCard
         this.cardContentArea.prepend(duplicateModal)
