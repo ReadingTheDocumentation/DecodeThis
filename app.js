@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const getQuote = async () => {
     try {
 
-        let res = await axios.get('https://api.quotable.io/random?minLength=55&maxLength=69')
+        let res = await axios.get('---https://api.quotable.io/random?minLength=55&maxLength=69')
         let dailyQuote = `"${res.data.content}"`
         let author = res.data.author
         newGame = new DecodeThis(dailyQuote, author)
@@ -16,7 +16,6 @@ const getQuote = async () => {
         let author = "Douglas Adams"
         newGame = new DecodeThis(dailyQuote, author)
     }
-    newGame.spanify(newGame.decodeThis)
 }
 
 class DecodeThis {
@@ -25,34 +24,31 @@ class DecodeThis {
         this.quote = quote
         this.letters = {}
         this.userletters = new Set
-        this.lcQuote = quote.toUpperCase()
-        this.decodeThis = this.randomizeQuote()
-        // this.addQuoteToApp = this.spanify(this.decodeThis)
 
-        this.htmlQuote = document.createElement('p')
 
-        this.footer = document.querySelector('.card-footer')
-        this.fromBox = document.querySelector('#from')
-        this.toBox = document.querySelector('#to')
-        this.cardHeader = document.querySelector('.card-header')
-        this.letterSelect = document.querySelector('.content')
-        this.cardContentArea = document.querySelector('.card-content')
-        this.modal = document.querySelector(".modal");
+        this.htmlQuoteEl;
+        this.footerEl = document.querySelector('.card-footer')
+        this.fromBoxEl = document.querySelector('#from')
+        this.toBoxEl = document.querySelector('#to')
+        this.cardHeaderEl = document.querySelector('.card-header')
+        this.letterSelectEl = document.querySelector('.content')
+        this.cardContentAreaEl = document.querySelector('.card-content')
+        this.modalEl = document.querySelector(".modal")
 
-        this.modalOptionEventListeners = this.modalEventListeners();
-        this.userInputsListeners = this.inputEventListeners()
-
-        this.viewportLock = this.lockViewport();
+        this.initializeModalEventListeners()
+        this.initializeInputEventListeners()
+        this.initializeLockViewport()
 
         this.duplicateCheck = false;
         this.ignoreChange;
         this.from;
         this.to;
+        this.renderSpannedQuoteToApp(this.randomizeQuote())
 
     }
 
 
-    lockViewport() {
+    initializeLockViewport() {
         var viewport = document.querySelector("meta[name=viewport]");
         viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight);
         //locks viewport for Android devices so that soft keyboard doesn't shrink it.
@@ -69,93 +65,111 @@ class DecodeThis {
 
     }
 
-    inputEventListeners() {
-        this.toBox.addEventListener('touchstart', (e) => {
+    initializeInputEventListeners() {
+        this.toBoxEl.addEventListener('touchstart', (e) => {
             //Looks redundant but do to mobileSafari it is required.
-            this.iOSScrollInterupt(e, this.toBox)
+            this.iOSScrollInterupt(e, this.toBoxEl)
         })
 
-        this.fromBox.addEventListener('touchstart', (e) => {
+        this.fromBoxEl.addEventListener('touchstart', (e) => {
             //Looks redundant but do to mobileSafari it is required.
-            this.iOSScrollInterupt(e, this.fromBox)
+            this.iOSScrollInterupt(e, this.fromBoxEl)
         })
 
-        this.fromBox.addEventListener('focus', (e) => {
-            this.iOSScrollInterupt(e, this.fromBox)
+        this.fromBoxEl.addEventListener('focus', (e) => {
+            this.iOSScrollInterupt(e, this.fromBoxEl)
 
         })
 
-        this.toBox.addEventListener('focus', (e) => {
-            this.iOSScrollInterupt(e, this.toBox)
+        this.toBoxEl.addEventListener('focus', (e) => {
+            this.iOSScrollInterupt(e, this.toBoxEl)
         })
 
-        this.footer.addEventListener('keyup', (e) => {
-            if (this.fromBox.value.length >= 1) {
-                this.iOSScrollInterupt(e, this.toBox)
-                this.toBox.focus()
-                this.from = document.querySelector('#from').value.toUpperCase()
+        this.footerEl.addEventListener('keyup', (e) => {
+            if (this.fromBoxEl.value.length >= 1) {
+                this.from = this.fromBoxEl.value.toUpperCase()
+                this.handleFromToInputs(this.from, this.to)
+                this.iOSScrollInterupt(e, this.toBoxEl)
+                this.toBoxEl.focus()
             }
-            if (this.toBox.value.length >= 1) {
-                this.to = document.querySelector('#to').value.toUpperCase()
-                this.letterChange(this.from, this.to)
-                this.iOSScrollInterupt(e, this.fromBox)
-                this.fromBox.focus()
+            if (this.toBoxEl.value.length >= 1) {
+                this.to = this.toBoxEl.value.toUpperCase()
+                this.handleFromToInputs(this.from, this.to)
+                this.iOSScrollInterupt(e, this.fromBoxEl)
+                this.fromBoxEl.focus()
             }
             if (e.keyCode === 8) {
-                this.toBox.value = ''
-                this.fromBox.value = ''
-                this.iOSScrollInterupt(e, this.fromBox)
-                this.fromBox.focus()
+                this.toBoxEl.value = ''
+                this.fromBoxEl.value = ''
+                this.iOSScrollInterupt(e, this.fromBoxEl)
+                this.fromBoxEl.focus()
             }
         })
 
-        this.letterSelect.addEventListener('click', (e) => {
+        this.letterSelectEl.addEventListener('click', (e) => {
             console.log("letter select fires")
             let currentLetter = e.target
             this.revertLetter(currentLetter)
+            //
         })
 
     }
 
-    modalEventListeners() {
-        this.cardHeader.addEventListener('click', (e) => {
+    initializeModalEventListeners() {
+
+        this.cardHeaderEl.addEventListener('click', (e) => {
             if (e.target.id === 'question') {
-                this.modal.classList.add("is-active")
+                this.modalEl.classList.add("is-active")
             }
         })
 
-        this.modal.addEventListener('click', (e) => {
+        this.modalEl.addEventListener('click', (e) => {
             if (e.target.classList.contains("delete")) {
-                this.modal.classList.remove("is-active")
+                this.modalEl.classList.remove("is-active")
+            }
+
+            if (e.target.classList.contains("modal-background")) {
+                this.modalEl.classList.remove("is-active")
+            }
+
+
+        })
+
+        document.addEventListener('keyup', (e) => {
+            if (this.modalEl.classList.contains('is-active')) {
+                if (e.key === 'Escape') {
+                    this.modalEl.classList.remove("is-active")
+                }
             }
         })
 
-        this.cardContentArea.addEventListener('click', (e) => {
-            this.duplicateChangeInput(e)
+        this.cardContentAreaEl.addEventListener('click', (e) => {
+            this.handleModalButtons(e)
         })
 
     }
 
     commonButtonActions(e) {
         this.ignoreChange.remove()
-        this.footer.style.display = 'inline-flex'
-        this.fromBox.focus()
-        this.to = ''
-        this.from = ''
-        this.iOSScrollInterupt(e, this.fromBox)
+        this.footerEl.style.display = 'inline-flex'
+        this.fromBoxEl.focus()
+
+        this.iOSScrollInterupt(e, this.fromBoxEl)
     }
 
-    duplicateChangeInput(e) {
-        if (e.target.innerText === "Go Back") {
+    handleModalButtons(e) {
+        if (e.target.classList.contains('back')) {
             this.commonButtonActions(e)
         }
-        if (e.target.innerText === "Confirm Change") {
+        if (e.target.classList.contains('confirm')) {
             if (this.duplicateCheck === true) {
-                this.changeQuote(this.to, this.from, true)
-                this.changeQuote(this.from, this.to)
+                console.log("this and to are", this.to, this.from)
+                this.renderUpdatedQuote(this.to, this.from, true)
+                this.renderUpdatedQuote(this.from, this.to)
                 this.duplicateCheck = false
             } else {
-                this.letterChange(this.to, this.from, true)
+                console.log("this condition fires evertime")
+                this.handleFromToInputs(this.to, this.from, true)
                 this.userletters.delete(this.to)
             }
             this.commonButtonActions(e)
@@ -172,25 +186,30 @@ class DecodeThis {
         }
     }
 
-    letterChange(from, to, revert) {
-        this.duplicateChecker(from, to, revert)
-        this.userletters.add(to)
-        this.fullyDecoded()
-        this.toBox.value = ''
-        this.fromBox.value = ''
+    handleFromToInputs(from, to, revert) {
+        if (from && to) {
+
+            this.duplicateChecker(from, to, revert)
+            this.fullyDecoded()
+            this.userletters.add(this.toBoxEl.value.toUpperCase())
+            this.toBoxEl.value = ''
+            this.fromBoxEl.value = ''
+
+        }
     }
 
     randomizeQuote() {
+        let ucQuote = this.quote.toUpperCase()
         let codedQuote = ''
-        for (let i = 0; i < this.lcQuote.length; i++) {
-            if (this.lcQuote.charCodeAt(i) >= 65 && this.lcQuote.charCodeAt(i) <= 91) {
-                if (this.letters[this.lcQuote[i]]) {
-                    codedQuote += this.letters[this.lcQuote[i]]
+        for (let i = 0; i < ucQuote.length; i++) {
+            if (ucQuote.charCodeAt(i) >= 65 && ucQuote.charCodeAt(i) <= 91) {
+                if (this.letters[ucQuote[i]]) {
+                    codedQuote += this.letters[ucQuote[i]]
                 } else {
-                    codedQuote += this.getLetter(this.lcQuote[i])
+                    codedQuote += this.getLetter(ucQuote[i])
                 }
             } else {
-                codedQuote += this.lcQuote[i]
+                codedQuote += ucQuote[i]
             }
         }
         return codedQuote
@@ -206,8 +225,9 @@ class DecodeThis {
     }
 
 
-    spanify(words) {
-        this.htmlQuote.classList.add("quote")
+    renderSpannedQuoteToApp(words) {
+        this.htmlQuoteEl = document.createElement('p')
+        this.htmlQuoteEl.classList.add("quote")
         let contentElement = document.querySelector(".content")
         for (let i = 0; i < words.length; i++) {
             let curChar = words[i]
@@ -217,9 +237,9 @@ class DecodeThis {
             if (curChar.charCodeAt(0) > 64 && curChar.charCodeAt(0) < 91) {
                 letterSpan.classList.add("defaultSize")
             } else { letterSpan.classList.add("newSize") }
-            this.htmlQuote.append(letterSpan)
+            this.htmlQuoteEl.append(letterSpan)
         }
-        contentElement.append(this.htmlQuote)
+        contentElement.append(this.htmlQuoteEl)
     }
 
     duplicateChecker(from, to, revert) {
@@ -230,13 +250,13 @@ class DecodeThis {
             let title = `Oops! Duplicate Change`
             this.duplicateLetterModal(from, to, title, message)
         } else {
-            this.changeQuote(from, to, revert)
+            this.renderUpdatedQuote(from, to, revert)
         }
     }
 
-    changeQuote(from, to, revert) {
-        this.htmlQuote = document.querySelector(".quote")
-        const element = this.htmlQuote.children
+    renderUpdatedQuote(from, to, revert) {
+        this.htmlQuoteEl = document.querySelector(".quote")
+        const element = this.htmlQuoteEl.children
         if (!revert) {
             for (let i = 0; i < element.length; i++) {
                 if (element[i].innerText === from && element[i].id === from) {
@@ -245,8 +265,12 @@ class DecodeThis {
                 }
 
             }
+            this.to = ''
+            this.from = ''
+
         }
         if (revert) {
+            console.log('revert fires', from, to)
             for (let i = 0; i < element.length; i++) {
                 if (element[i].innerText === from && element[i].id != from) {
                     element[i].innerText = element[i].id
@@ -257,12 +281,15 @@ class DecodeThis {
 
         }
 
+
+
     }
 
     fullyDecoded() {
-        let quoteElement = this.htmlQuote.children
+        let ucQuote = this.quote.toUpperCase()
+        let quoteElement = this.htmlQuoteEl.children
         for (let i = 1; i < quoteElement.length - 1; i++) {
-            if (quoteElement[i].innerText != this.lcQuote[i]) {
+            if (quoteElement[i].innerText != ucQuote[i]) {
                 return;
             }
         }
@@ -280,17 +307,17 @@ class DecodeThis {
                         </header>
                         <div class="modal-card-body">
                         <p>${message}</p>
-                        <button class="button is-success">Confirm Change</button>
-                        <button class="button is-warning">Go Back</button>
+                        <button class="button is-success confirm">Confirm Change</button>
+                        <button class="button is-warning back">Go Back</button>
                         </div>
                         <footer class="modal-card-foot">
                         </footer>
                         </div>`
 
         duplicateModal.innerHTML = modalCard
-        this.cardContentArea.prepend(duplicateModal)
+        this.cardContentAreaEl.prepend(duplicateModal)
         this.ignoreChange = duplicateModal
-        this.footer.style.display = 'none'
+        this.footerEl.style.display = 'none'
     }
 
 
@@ -309,8 +336,8 @@ class DecodeThis {
                         <footer class="modal-card-foot">
                         </footer>
                         </div>`
-        this.modal.innerHTML = modalCard
-        this.modal.classList.add("is-active")
+        this.modalEl.innerHTML = modalCard
+        this.modalEl.classList.add("is-active")
     }
 
 
