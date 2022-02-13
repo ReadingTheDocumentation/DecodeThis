@@ -13,8 +13,8 @@ const getQuote = async () => {
         newGame = new DecodeThis(dailyQuote, author)
 
     } catch (e) {
-        // let dailyQuote = "I love deadlines. I love the whooshing noise they make as they go by."
-        let dailyQuote = "The quick brown fox jumps over the lazy dog"
+        let dailyQuote = "I love deadlines. I love the whooshing noise they make as they go by."
+        // let dailyQuote = "The quick brown fox jumps over the lazy dog"
         let author = "Douglas Adams"
         newGame = new DecodeThis(dailyQuote, author)
     }
@@ -57,7 +57,7 @@ class DecodeThis {
 
     //this function prevents page from scrolling up when ios opens the softkeyboard.
     //https://stackoverflow.com/a/70857776/17197174
-    iOSScrollInterupt(e, element) {
+    handleIOSScrollInterrupt(e, element) {
         e.stopPropagation()
         element.style.transform = 'TranslateY(-10000px)'
         element.focus()
@@ -68,21 +68,21 @@ class DecodeThis {
     initializeInputEventListeners() {
         this.toBoxEl.addEventListener('touchstart', (e) => {
             //Looks redundant but do to mobileSafari it is required.
-            this.iOSScrollInterupt(e, this.toBoxEl)
+            this.handleIOSScrollInterrupt(e, this.toBoxEl)
         })
 
         this.fromBoxEl.addEventListener('touchstart', (e) => {
             //Looks redundant but do to mobileSafari it is required.
-            this.iOSScrollInterupt(e, this.fromBoxEl)
+            this.handleIOSScrollInterrupt(e, this.fromBoxEl)
         })
 
         this.fromBoxEl.addEventListener('focus', (e) => {
-            this.iOSScrollInterupt(e, this.fromBoxEl)
+            this.handleIOSScrollInterrupt(e, this.fromBoxEl)
 
         })
 
         this.toBoxEl.addEventListener('focus', (e) => {
-            this.iOSScrollInterupt(e, this.toBoxEl)
+            this.handleIOSScrollInterrupt(e, this.toBoxEl)
         })
 
         this.footerEl.addEventListener('keyup', (e) => {
@@ -90,19 +90,19 @@ class DecodeThis {
             if (this.fromBoxEl.value.length >= 1) {
                 this.from = this.fromBoxEl.value.toUpperCase()
                 this.handleFromToInputs(this.from, this.to)
-                this.iOSScrollInterupt(e, this.toBoxEl)
+                this.handleIOSScrollInterrupt(e, this.toBoxEl)
                 this.toBoxEl.focus()
             }
             if (this.toBoxEl.value.length >= 1) {
                 this.to = this.toBoxEl.value.toUpperCase()
                 this.handleFromToInputs(this.from, this.to)
-                this.iOSScrollInterupt(e, this.fromBoxEl)
+                this.handleIOSScrollInterrupt(e, this.fromBoxEl)
                 this.fromBoxEl.focus()
             }
             if (e.key === 'Backspace') {
                 this.toBoxEl.value = ''
                 this.fromBoxEl.value = ''
-                this.iOSScrollInterupt(e, this.fromBoxEl)
+                this.handleIOSScrollInterrupt(e, this.fromBoxEl)
                 this.fromBoxEl.focus()
             }
         })
@@ -110,10 +110,9 @@ class DecodeThis {
         this.letterSelectEl.addEventListener('click', (e) => {
             if (e.target.classList.contains('newSize')) {
                 let currentLetterElement = e.target
-                this.revertLetter(currentLetterElement)
+                this.handleRevertLetter(currentLetterElement)
             }
         })
-
     }
 
     initializeModalEventListeners() {
@@ -129,7 +128,6 @@ class DecodeThis {
             }
 
         })
-
         document.addEventListener('keyup', (e) => {
             if (this.modalEl.classList.contains('is-active')) {
                 if (e.key === 'Escape') {
@@ -138,7 +136,7 @@ class DecodeThis {
             }
         })
 
-        //todo -- fix this so it uses the correct modal and we can move the click in to the modalel event listener
+        //todo -- fix this so it uses the correct modal and we can move the click in to the modal event listener
         this.cardContentAreaEl.addEventListener('click', (e) => {
             if (e.target.classList.contains('button')) {
                 this.handleModalButtons(e)
@@ -151,10 +149,8 @@ class DecodeThis {
         this.ignoreChange.remove()
         this.footerEl.style.display = 'inline-flex'
         this.fromBoxEl.focus()
-        this.iOSScrollInterupt(e, this.fromBoxEl)
+        this.handleIOSScrollInterrupt(e, this.fromBoxEl)
     }
-
-
 
     handleModalButtons(e) {
         if (e.target.classList.contains('confirm')) {
@@ -174,16 +170,13 @@ class DecodeThis {
         this.from = ''
     }
 
-    revertLetter(currentLetterElement) {
+    handleRevertLetter(currentLetterElement) {
         this.from = currentLetterElement.id
         this.to = currentLetterElement.innerText
         let title = "Revert Letter"
         let message = `Would like to revert "${this.to.toUpperCase()}" back to it's initial state as "${this.from.toUpperCase()}"?`
         this.renderAlertModal(from, to, title, message)
-
     }
-
-
 
     // this should only fire if they have  new values in them
     handleFromToInputs(from, to, revert) {
@@ -339,6 +332,4 @@ class DecodeThis {
         this.modalEl.innerHTML = modalCard
         this.modalEl.classList.add("is-active")
     }
-
-
 }
