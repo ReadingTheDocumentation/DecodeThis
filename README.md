@@ -10,7 +10,6 @@
     <strong>A Front End Web App Cryptogram Game</strong>
     <br />
     <br />
-    <br />
     <a href="https://decodethis.app/">Play the Game</a>
     ·
     <a href="https://github.com/ReadingTheDocumentation/DecodeThis/issues">Report Bug</a>
