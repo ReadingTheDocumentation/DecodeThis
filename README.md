@@ -121,13 +121,13 @@ Much more challenging to work with was iOS. Rather than shrinking the viewport w
 
 I initially wrote the code across several files that looked back at a new Class created when the dom loaded, and the API request fired. I had a JS file for all user inputs, one for rendering modals, and a couple of others that, looking back, didn't make a lot of sense.  
 
-After getting the app fully functional, I quickly realized that there was no good way to write tests in Mocha for the app. As this is one of my first projects, the goal was to have a total Mocha Test Suite prospective employers could look at it. Enter TIGR  
+After getting the app fully functional, I quickly realized that there was no good way to write tests in Mocha for the app. As this is one of my first projects, the goal was to have a total Mocha Test Suite prospective employers could look at it. Enter TIGR:  
 
 -TIGR
-    - A close friend of mine who works in biotech told me about his team's term TIGR or Test Induced Greater Refactoring. I ended up moving nearly the entire app into a single class that's created upon an API call -- now I can write a test that makes a version of the app by creating a new course with know data.  
+    - A close friend of mine who works in biotech told me about his team's term TIGR or Test Induced Greater Refactoring. I ended up moving nearly the entire app into a single class that's created upon an API call -- now I can write a test that makes a version of the app by creating a new course with known data.  
 
 -Val Reviews Code
-    - Luckily my sister is a fantastic coder and lives nearby. I asked her for a code review, and we did a deep dive into the code. You can take a look at it here. A lot of it came down to patterns - making my code more self-documenting and adding in patterns the like using the escape key to close a modal. I can't understate how helpful this code review was for my troubleshooting. Naming conventions and patterns are EVERYTHING.   
+    - Luckily my sister is a fantastic coder and lives nearby. I asked her for a code review, and we did a deep dive into the code. You can take a look at it here. A lot of it came down to patterns - making my code more self-documenting and adding in common ui design patterns the like using the escape key to close a modal. I can't understate how helpful this code review was for my troubleshooting. Naming conventions and patterns are EVERYTHING.   
 
 
 ### Road Map  
