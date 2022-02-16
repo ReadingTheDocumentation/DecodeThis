@@ -1,18 +1,36 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: #f2f4fb;
+  background-image: url('Images/geobackground.png') ;
+}
 
 section {
   padding: 1vw;
+  
 }
 
-.modal-card{
-  padding: 0px;
-  margin: 0px;
-  max-height: 50vh;
-  width: 100%;
+
+blockquote {
+  font-family: American Typewriter, serif	;
+  font-size: 1.5em;
+  margin: 20px;
 }
 
-.modal-background {
-  height: 98vh;
-}
+input {
+  text-align: center;
+  margin-bottom: 1vh;
+  }
+
+
+
+.from{
+     margin-left: 1vh;
+  }
+
+.to {
+    margin-right: 1vh;
+  }
 
 .column {
   margin: 0 auto;
@@ -20,15 +38,12 @@ section {
   
 }
 
-input {
-  text-align: center;
-  margin-right: 1px;
-  }
 
-blockquote {
-  font-family: American Typewriter, serif	;
-  font-size: 1.5em;
-  margin: 20px;
+.modal-card{
+  padding: 0px;
+  margin: 0px;
+  max-height: 50vh;
+  width: 100%;
 }
 
 
@@ -41,7 +56,7 @@ blockquote {
   padding: 0.75rem 1rem;
 }
 
-  .author {
+.author {
     margin: 20px;
     margin-right: 25%;
     text-align: right;
@@ -49,7 +64,8 @@ blockquote {
     font-size: 1.25em;	
   }
 
-  div.card-content{
+
+.card-content{
     line-height: 3em;
   }
 
@@ -60,7 +76,6 @@ blockquote {
 
 .quote {
   color: hsl(204, 86%, 53%);
-  /* font-size: 1.5em; */
   margin-top: 35px;
   margin-bottom: 35px;
   letter-spacing: .25rem;
@@ -79,10 +94,13 @@ blockquote {
 
 }
 
+.card-footer {
+  border-top: 0px;
+}
+
 .changes {
   margin: 10px;
 }
-
 
 
 #example {
@@ -91,16 +109,80 @@ blockquote {
 }
 
 #instructions {
-  
   max-height: 80vh;
   max-width: 33vw;
+}
+
+#decoded {
+  max-height: 80vh;
+  max-width: 33vw;
+
 }
 
 .created-by {
   font-size: 1 vw;
 }
 
+.play-again{
+  width: 100%
+}
+
+@media only screen and (min-width: 601px) {
+
+  #app{
+    margin: 0;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+
+}
+
+.modal-card-title{
+  display:  inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-card-foot{
+  display:  inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
 @media only screen and (max-width: 600px) {
+
+  .modal-background {
+  height: 100vh;
+ 
+  
+  
+
+  }
+ 
+  #decoded {
+    position: fixed;
+    top: 2vh;
+    max-height: 80vh;
+    max-width: 90vw;
+  }
+
+  .outerModal .modal-card {
+    position: absolute;
+    top: 10vh;
+    left: 6.5vh;
+    max-width: 90vw;
+    margin-top: -5vh;
+    margin-left: -5vh;   
+   
+    
+  }
+ 
   #instructions {
     max-height: 80vh;
     max-width: 85vw;

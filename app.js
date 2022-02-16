@@ -6,14 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const getQuote = async () => {
     try {
-
         let res = await axios.get(apiURL)
         let dailyQuote = `"${res.data.content}"`
         let author = res.data.author
         newGame = new DecodeThis(dailyQuote, author)
 
     } catch (e) {
-        let dailyQuote = "I love deadlines. I love the whooshing noise they make as they go by."
+        let dailyQuote = "I."
+        // let dailyQuote = "I love deadlines. I love the whooshing noise they make as they go by."
+
         // let dailyQuote = "The quick brown fox jumps over the lazy dog"
         let author = "Douglas Adams"
         newGame = new DecodeThis(dailyQuote, author)
@@ -34,7 +35,8 @@ class DecodeThis {
         this.rulesToggleEl = document.querySelector('.card-header-icon')
         this.letterSelectEl = document.querySelector('.content')
         this.cardContentAreaEl = document.querySelector('.card-content')
-        this.modalEl = document.querySelector(".modal")
+        this.modalEl = document.querySelector('.modal')
+        this.rulesModalEl = document.querySelector('.rules')
 
         this.initializeModalEventListeners()
         this.initializeInputEventListeners()
@@ -121,11 +123,21 @@ class DecodeThis {
         })
         this.modalEl.addEventListener('click', (e) => {
             if (e.target.classList.contains("delete")) {
-                this.modalEl.classList.remove("is-active")
-                this.fromBoxEl.focus()
+                if (this.modalEl.classList.contains("decoded")) {
+                    location.reload();
+                } else {
+                    this.modalEl.classList.remove("is-active")
+                    this.fromBoxEl.focus()
+
+                }
             }
+
             if (e.target.classList.contains("modal-background")) {
                 this.modalEl.classList.remove("is-active")
+            }
+
+            if (e.target.classList.contains("play-again")) {
+                location.reload();
             }
 
         })
@@ -144,11 +156,13 @@ class DecodeThis {
             }
         })
 
+
+
     }
 
     commonButtonActions(e) {
         this.ignoreChange.remove()
-        this.footerEl.style.display = 'inline-flex'
+        this.footerEl.style.display = 'flex'
         this.fromBoxEl.focus()
         this.handleIOSScrollInterrupt(e, this.fromBoxEl)
     }
@@ -184,14 +198,13 @@ class DecodeThis {
         if (!revert && to && from && !this.checkInputIsLetter()) {
             this.handleDuplicateLetterChange(from, to, revert)
             this.lettersChangedByUser.add(to)
-            this.checkIfQuoteDecoded()
             this.toBoxEl.value = ''
             this.fromBoxEl.value = ''
+            this.checkIfQuoteDecoded()
         }
     }
 
     checkInputIsLetter() {
-        console.log('checkInputIsLetter()')
         let to = this.toBoxEl.value.toUpperCase()
         let from = this.fromBoxEl.value.toUpperCase()
         if (to < 64 || to > 91 || from < 64 || from > 91) {
@@ -282,7 +295,6 @@ class DecodeThis {
             this.from = ''
         }
         if (revert) {
-            console.log('revert fires', from, to)
             for (let i = 0; i < element.length; i++) {
                 if (element[i].innerText === from && element[i].id != from) {
                     element[i].innerText = element[i].id
@@ -303,10 +315,12 @@ class DecodeThis {
                         </header>
                         <div class="modal-card-body">
                         <p>${message}</p>
+                        </div>
+                        <footer class="modal-card-foot">
+                        <div class="confirm-goback">
                         <button class="button is-success confirm">Confirm Change</button>
                         <button class="button is-warning back">Go Back</button>
                         </div>
-                        <footer class="modal-card-foot">
                         </footer>
                         </div>`
         duplicateModal.innerHTML = modalCard
@@ -318,7 +332,7 @@ class DecodeThis {
 
     RenderDecodedModal(quote, author) {
         let modalCard = `<div class="modal-background"></div>
-                        <div class="modal-card">
+                        <div id="decoded" class="modal-card">
                         <header class="modal-card-head">
                         <p class="modal-card-title">Great Work!</p>
                         <button class="delete remove-modal" aria-label="close"></button>
@@ -327,10 +341,18 @@ class DecodeThis {
                         <blockquote>${quote}</blockquote>
                         <p class="author">—${author}</p>
                         </div>
-                        <footer class="modal-card-foot">
+                        <footer class="modal-card-foot has-text-centered">
+                   
+                        <button class="button is-primary play-again">Decrypt Another Quote</button>
+
                         </footer>
                         </div>`
         this.modalEl.innerHTML = modalCard
+        this.modalEl.classList.add("decoded")
         this.modalEl.classList.add("is-active")
+
+        this.footerEl.style.display = 'none'
+
+
     }
 }
