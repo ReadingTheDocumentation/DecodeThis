@@ -122,6 +122,7 @@ class DecodeThis {
         this.modalEl.addEventListener('click', (e) => {
             if (e.target.classList.contains("delete")) {
                 this.modalEl.classList.remove("is-active")
+                this.fromBoxEl.focus()
             }
             if (e.target.classList.contains("modal-background")) {
                 this.modalEl.classList.remove("is-active")

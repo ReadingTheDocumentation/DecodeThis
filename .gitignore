@@ -1,0 +1,25 @@
+# Ignore docs files
+_gh_pages
+_site
+
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.log
+*.orig
+*.rej
+*.swo
+*.swp
+*.vi
+*.zip
+*~
+
+# OS or Editor folders
+._*
+.cache
+.DS_Store
+
+
+# VScode
+.vscode
