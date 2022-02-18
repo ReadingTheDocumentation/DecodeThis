@@ -1,5 +1,5 @@
 let newGame;
-const apiURL = 'https://api.quotable.io/random?minLength=55&maxLength=69'
+// const apiURL = 'https://api.quotable.io/random?minLength=55&maxLength=69'
 document.addEventListener("DOMContentLoaded", function () {
     getQuote()
 });
