@@ -55,11 +55,11 @@ class DecodeThis {
 
 
     initializeMode() {
-        if (localStorage.mode) {
-            console.log(localStorage)
-            this.modeStyleSheet.href = localStorage.mode
-            this.modeSelect.innerHTML = localStorage.icon
-            this.modeSelect.classList.replace(localStorage.currentMode, localStorage.previousMode)
+        if (sessionStorage.mode) {
+            console.log(sessionStorage)
+            this.modeStyleSheet.href = sessionStorage.mode
+            this.modeSelect.innerHTML = sessionStorage.icon
+            this.modeSelect.classList.replace(sessionStorage.currentMode, sessionStorage.previousMode)
         }
     }
 
@@ -149,7 +149,7 @@ class DecodeThis {
                     this.fromBoxEl.focus()
 
                 }
-                localStorage.setItem('hasPlayed', true)
+                sessionStorage.setItem('hasPlayed', true)
             }
 
             if (e.target.classList.contains("modal-background")) {
@@ -181,7 +181,7 @@ class DecodeThis {
     }
 
     checkIfPlayedBefore() {
-        if (localStorage.hasPlayed) {
+        if (sessionStorage.hasPlayed) {
             this.modalEl.classList.remove("is-active")
         }
 
@@ -417,10 +417,10 @@ class DecodeThis {
         this.modeStyleSheet.href = `${previousMode}mode.css`
 
 
-        localStorage.setItem('mode', this.modeStyleSheet.href)
-        localStorage.setItem('icon', this.modeSelect.innerHTML)
-        localStorage.setItem('currentMode', currentMode)
-        localStorage.setItem('previousMode', previousMode)
+        sessionStorage.setItem('mode', this.modeStyleSheet.href)
+        sessionStorage.setItem('icon', this.modeSelect.innerHTML)
+        sessionStorage.setItem('currentMode', currentMode)
+        sessionStorage.setItem('previousMode', previousMode)
 
     }
 

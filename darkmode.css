@@ -19,6 +19,15 @@ body {
 .icon {
     color: white;
 }
+
+.defaultSize {
+    color: #B794E9;
+
+}
+
+.newSize {
+    color: #00FB7D;
+}
 .input {
     background-color: #394556 ;
     caret-color: white;
@@ -85,14 +94,7 @@ p {
 }
 
 
-.defaultSize {
-    color: #B794E9;
 
-}
-
-.newSize {
-    color: #00FB7D;
-}
 
 
 .button.is-success {
