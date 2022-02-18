@@ -1,5 +1,5 @@
 let newGame;
-// const apiURL = 'https://api.quotable.io/random?minLength=55&maxLength=69'
+const apiURL = 'https://api.quotable.io/random?minLength=55&maxLength=69'
 document.addEventListener("DOMContentLoaded", function () {
     getQuote()
 });
@@ -212,11 +212,14 @@ class DecodeThis {
     }
 
     handleRevertLetter(currentLetterElement) {
-        this.from = currentLetterElement.id
-        this.to = currentLetterElement.innerText
-        let title = "Revert Letter"
-        let message = `Would like to revert "${this.to.toUpperCase()}" back to it's initial state as "${this.from.toUpperCase()}"?`
-        this.renderAlertModal(from, to, title, message)
+        if (!this.checkInputIsLetter(currentLetterElement)) {
+            this.from = currentLetterElement.id
+            this.to = currentLetterElement.innerText
+            let title = "Revert Letter"
+            let message = `Would like to revert "${this.to.toUpperCase()}" back to it's initial state as "${this.from.toUpperCase()}"?`
+            this.renderAlertModal(from, to, title, message)
+
+        }
     }
 
     clearFromTo() {
@@ -237,10 +240,14 @@ class DecodeThis {
         }
     }
 
-    checkInputIsLetter() {
+    checkInputIsLetter(currentLetterElement) {
         let to = this.toBoxEl.value.toUpperCase()
         let from = this.fromBoxEl.value.toUpperCase()
 
+        if (currentLetterElement) {
+            to = currentLetterElement.innerText
+            from = currentLetterElement.id
+        }
         if (from === to) {
             this.clearFromTo()
             return true

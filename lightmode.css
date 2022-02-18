@@ -11,3 +11,18 @@ body {
 .newSize {
     color: hsl(0, 0%, 4%);
 }
+
+.is-link.input, .is-link.textarea {
+    border-color: hsl(204, 86%, 53%);;
+}
+
+
+.is-primary.input, .is-primary.textarea {
+    border-color: black;
+}
+
+.button.is-warning {
+    background-color: hsl(204, 86%, 53%);
+    border-color: transparent;
+    color: hsl(0, 0%, 96%);
+}

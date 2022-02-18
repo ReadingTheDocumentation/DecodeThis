@@ -30,28 +30,28 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about">About</a>
+      <a href="#About">About</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#Built">Built With</a></li>
       </ul>
     </li>
     <li>
-      <a href="#the-game">Game Design</a>
+      <a href="#Game">Game Design</a>
       <ul>
-        <li><a href="#howto">How to Decode a Quote</a></li>
-        <li><a href="#tips">Tips</a></li>
+        <li><a href="#How">How to Decode a Quote</a></li>
+        <li><a href="#Tips">Tips</a></li>
       </ul>
     </li>
     <li>
-      <a href="#hurdles">Biggest Hurdles</a>
+      <a href="#Biggest">Biggest Hurdles</a>
       <ul>
-        <li><a href="#viewport">Android Viewport Issue</a></li>
-        <li><a href="#iOSScroll">iOS Scroll on Focus Issue</a></li>
+        <li><a href="#Android">Android Viewport Issue</a></li>
+        <li><a href="#iOS">iOS Scroll on Focus Issue</a></li>
       </ul>
     </li>
-    <li><a href="#codereview">First Code Review</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#credits">Credits</a></li>
+    <li><a href="#First">First Code Review</a></li>
+    <li><a href="#Roadmap">Roadmap</a></li>
+    <li><a href="#Credits">Credits</a></li>
   </ol>
 </details>
   
@@ -133,7 +133,6 @@ After getting the app fully functional, I quickly realized that there was no goo
 ### Road Map  
 
 - Test Suite: as mentioned above, I need to finish out the test suite. I also need to do more research about creating tests as I develop.  
-- Dark Mode: There is a way to do Bulma in DarkMode, but it requires Sass. Unfortunately, I haven't found a CDN for Node Sass, so I'm not sure when this will come, but I'm about to start learning Node, so hopefully soon.  
 - Streaks: I want a way to share how many quotes you've decoded, and you can see a streak. However, my skills aren't there yet.  
 - Daily: I'd also like everyone to get the exact quote, much like everyone gets the same word on Wordle  
 
