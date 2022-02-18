@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://decodethis.app">
-    <img src="https://decodethis.app/Images/Decodethis-OG-Image.png" alt="Logo">
+    <img src="https://decodethis.app/Images/acryptogramgame2.png" alt="Logo">
   </a>
 <h3 align="center">Decode This!</h3>
 
