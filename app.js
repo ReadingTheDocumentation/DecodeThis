@@ -56,7 +56,6 @@ class DecodeThis {
 
     initializeMode() {
         if (sessionStorage.mode) {
-            console.log(sessionStorage)
             this.modeStyleSheet.href = sessionStorage.mode
             this.modeSelect.innerHTML = sessionStorage.icon
             this.modeSelect.classList.replace(sessionStorage.currentMode, sessionStorage.previousMode)
@@ -247,7 +246,6 @@ class DecodeThis {
             return true
         }
         if (to < 64 || to > 91 || from < 64 || from > 91) {
-            console.log('letercheck fired', from, to)
             this.clearFromTo()
             return true
         }
