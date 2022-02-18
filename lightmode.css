@@ -1,0 +1,13 @@
+body {
+    background-color: #f2f4fb;
+    background-image: url('Images/geobackground.png') ;
+}
+
+.defaultSize {
+    color: hsl(204, 86%, 53%);
+
+}
+
+.newSize {
+    color: hsl(0, 0%, 4%);
+}

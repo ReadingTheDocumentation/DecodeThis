@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="https://kit.fontawesome.com/d13891405c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
+    <link id="mode" rel="stylesheet" href="darkmode.css">
 </head>
 
 <body>
@@ -31,6 +32,7 @@
                         <p class="card-header-title">
                             Decode This!
                         </p>
+
                         <button class="card-header-icon" aria-label="more options">
                             <span class="icon">
                                 <i id="question" class="far fa-question-circle" aria-hidden="true"></i>
@@ -62,6 +64,11 @@
         <div id="instructions" class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Decode This: How to Start</p>
+                <button class="card-header-icon" aria-label="dark or light mode selector">
+                    <span class="icon mode-select dark">
+                        <i id="lightmode" class="fa-solid fa-sun" title="Switch to Light Mode" aria-hidden="true"></i>
+                    </span>
+                </button>
                 <button class="delete" aria-label="close"></button>
             </header>
             <section class="modal-card-body">

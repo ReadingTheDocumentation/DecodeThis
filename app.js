@@ -12,8 +12,8 @@ const getQuote = async () => {
         newGame = new DecodeThis(dailyQuote, author)
 
     } catch (e) {
-        let dailyQuote = "I."
-        // let dailyQuote = "I love deadlines. I love the whooshing noise they make as they go by."
+        // let dailyQuote = "I."
+        let dailyQuote = "I love deadlines. I love the whooshing noise they make as they go by."
 
         // let dailyQuote = "The quick brown fox jumps over the lazy dog"
         let author = "Douglas Adams"
@@ -36,8 +36,12 @@ class DecodeThis {
         this.letterSelectEl = document.querySelector('.content')
         this.cardContentAreaEl = document.querySelector('.card-content')
         this.modalEl = document.querySelector('.modal')
-        this.rulesModalEl = document.querySelector('.rules')
+        this.modeStyleSheet = document.querySelector('#mode')
+        this.modeSelect = document.querySelector('.mode-select')
 
+
+        this.initializeMode()
+        this.checkIfPlayedBefore()
         this.initializeModalEventListeners()
         this.initializeInputEventListeners()
         this.initializeLockViewport()
@@ -49,6 +53,15 @@ class DecodeThis {
         this.renderSpannedQuoteToApp(this.createEncodedQuote())
     }
 
+
+    initializeMode() {
+        if (localStorage.mode) {
+            console.log(localStorage)
+            this.modeStyleSheet.href = localStorage.mode
+            this.modeSelect.innerHTML = localStorage.icon
+            this.modeSelect.classList.replace(localStorage.currentMode, localStorage.previousMode)
+        }
+    }
 
     //locks viewport for Android devices so that soft keyboard doesn't shrink it.
     //https://stackoverflow.com/a/62054041/17197174
@@ -68,6 +81,12 @@ class DecodeThis {
     }
 
     initializeInputEventListeners() {
+
+        this.modeSelect.addEventListener('click', () => {
+            this.handleDarkModeToggle()
+
+        })
+
         this.toBoxEl.addEventListener('touchstart', (e) => {
             //Looks redundant but do to mobileSafari it is required.
             this.handleIOSScrollInterrupt(e, this.toBoxEl)
@@ -130,6 +149,7 @@ class DecodeThis {
                     this.fromBoxEl.focus()
 
                 }
+                localStorage.setItem('hasPlayed', true)
             }
 
             if (e.target.classList.contains("modal-background")) {
@@ -157,6 +177,13 @@ class DecodeThis {
         })
 
 
+
+    }
+
+    checkIfPlayedBefore() {
+        if (localStorage.hasPlayed) {
+            this.modalEl.classList.remove("is-active")
+        }
 
     }
 
@@ -193,7 +220,14 @@ class DecodeThis {
         this.renderAlertModal(from, to, title, message)
     }
 
-    // this should only fire if they have  new values in them
+    clearFromTo() {
+        this.toBoxEl.value = ''
+        this.fromBoxEl.value = ''
+        this.to = ''
+        this.from = ''
+    }
+
+
     handleFromToInputs(from, to, revert) {
         if (!revert && to && from && !this.checkInputIsLetter()) {
             this.handleDuplicateLetterChange(from, to, revert)
@@ -207,12 +241,14 @@ class DecodeThis {
     checkInputIsLetter() {
         let to = this.toBoxEl.value.toUpperCase()
         let from = this.fromBoxEl.value.toUpperCase()
+
+        if (from === to) {
+            this.clearFromTo()
+            return true
+        }
         if (to < 64 || to > 91 || from < 64 || from > 91) {
-            this.toBoxEl.value = ''
-            this.fromBoxEl.value = ''
-            this.to = ''
-            this.from = ''
-            // this.fromBoxEl.click()
+            console.log('letercheck fired', from, to)
+            this.clearFromTo()
             return true
         }
     }
@@ -355,4 +391,38 @@ class DecodeThis {
 
 
     }
+
+    handleDarkModeToggle() {
+
+        let currentMode
+        let previousMode
+        let icon
+
+
+        if (this.modeSelect.classList.contains('light')) {
+            currentMode = 'light'
+            previousMode = 'dark'
+            icon = '<i id="darkmode" class="fa-solid fa-moon" aria-hidden="dark mode selector" title="Switch to Dark Mode"></i>'
+        } else {
+            currentMode = 'dark'
+            previousMode = 'light'
+            icon = '<i id="lightmode" class="fa-solid fa-sun" aria-hidden="light mode selector"></i>'
+
+        }
+
+
+        this.modeSelect.classList.remove(currentMode)
+        this.modeSelect.innerHTML = icon
+        this.modeSelect.classList.add(previousMode)
+        this.modeStyleSheet.href = `${previousMode}mode.css`
+
+
+        localStorage.setItem('mode', this.modeStyleSheet.href)
+        localStorage.setItem('icon', this.modeSelect.innerHTML)
+        localStorage.setItem('currentMode', currentMode)
+        localStorage.setItem('previousMode', previousMode)
+
+    }
+
+
 }

@@ -1,8 +1,7 @@
 body {
   height: 100vh;
   width: 100vw;
-  background-color: #f2f4fb;
-  background-image: url('Images/geobackground.png') ;
+ 
 }
 
 section {
@@ -47,14 +46,14 @@ input {
 }
 
 
-.changes{
+/* .changes{
   align-items: center;
   color: #363636;
   display: flex;
   flex-grow: 1;
   font-weight: 700;
   padding: 0.75rem 1rem;
-}
+} */
 
 .author {
     margin: 20px;
@@ -75,7 +74,6 @@ input {
 }
 
 .quote {
-  color: hsl(204, 86%, 53%);
   margin-top: 35px;
   margin-bottom: 35px;
   letter-spacing: .25rem;
@@ -83,12 +81,12 @@ input {
 }
 
 .defaultSize {
-  color: hsl(204, 86%, 53%);
+  
   font-size: 1.9em;
 }
 
 .newSize{
-  color: hsl(0, 0%, 4%);
+
   font-size:2.1em ;
   cursor: pointer
 
@@ -179,8 +177,6 @@ input {
     max-width: 90vw;
     margin-top: -5vh;
     margin-left: -5vh;   
-   
-    
   }
  
   #instructions {
@@ -206,19 +202,16 @@ input {
   }
   
   .quote {
-    color: hsl(204, 86%, 53%);
     margin-top: 1vh;
     margin-bottom: 1vh;
     letter-spacing: .35rem;
     
   }
   .defaultSize {
-    color: hsl(204, 86%, 53%);
     font-size: 1.1em;
   }
   
   .newSize{
-    color: hsl(0, 0%, 4%);
     font-size: 1.3em ;
     
   }
